@@ -1,0 +1,10 @@
+<h2>Список расходов</h2>
+
+{% for expense in expenses %}
+  <p>{{ expense.category.name }} <br> {{ expense.date }} <br> {{ expense.amount }}</p>
+{% empty %}
+  <p>Нет доступных расходов.</p>
+{% endfor %}
+
+<a href="{% url 'expense_create' %}">Создать новый расход</a>
+<p>Общие расходы: {{ total_expenses.amount__sum }}</p>

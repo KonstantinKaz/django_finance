@@ -1,0 +1,8 @@
+<h2>Delete Expense</h2>
+
+<p>Are you sure you want to delete the expense with ID: {{ expense.expense_id }}?</p>
+
+<form method="POST">
+  {% csrf_token %}
+  <button type="submit">Delete</button>
+</form>
