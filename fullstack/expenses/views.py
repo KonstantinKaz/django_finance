@@ -4,6 +4,8 @@ from .forms import ExpenseForm
 from django.db.models import Sum
 from decimal import Decimal
 import datetime
+from django.contrib.auth.models import User
+
 
 # ...
 
@@ -44,7 +46,9 @@ def expense_create(request):
     if request.method == 'POST':
         form = ExpenseForm(request.POST)
         if form.is_valid():
-            form.save()
+            expense = form.save(commit=False)
+            expense.user = request.user
+            expense.save()
             return redirect('expense_list')
     else:
         form = ExpenseForm()
@@ -56,11 +60,14 @@ def expense_edit(request, expense_id):
     if request.method == 'POST':
         form = ExpenseForm(request.POST, instance=expense)
         if form.is_valid():
-            form.save()
+            expense = form.save(commit=False)
+            expense.user = request.user
+            expense.save()
             return redirect('expense_list')
     else:
         form = ExpenseForm(instance=expense)
     return render(request, 'expenses/expense_edit.html', {'form': form})
+
 
 
 def expense_delete(request, expense_id):

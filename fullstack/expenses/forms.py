@@ -4,4 +4,7 @@ from .models import Expense
 class ExpenseForm(forms.ModelForm):
     class Meta:
         model = Expense
-        fields = ['user', 'category', 'date', 'amount', 'description']
+        fields = ['category', 'date', 'amount', 'description']
+        widgets = {
+            'user': forms.HiddenInput(),
+        }
