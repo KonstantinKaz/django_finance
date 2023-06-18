@@ -1,0 +1,39 @@
+<h2>Expense Categories</h2>
+
+<ul>
+  {% for category in expense_categories %}
+    <li>
+      <h3>{{ category.name }}</h3>
+      <p>{{ category.description }}</p>
+      <form method="POST" action="{% url 'expense_category_delete' category.category_id %}">
+        {% csrf_token %}
+        <button type="submit">Delete</button>
+      </form>
+      <a href="{% url 'expense_category_update' category.category_id %}">Edit</a>  <!-- Добавленная строка -->
+    </li>
+  {% empty %}
+    <li>No expense categories available.</li>
+  {% endfor %}
+</ul>
+
+<a href="{% url 'expense_category_create' %}">Create New Expense Category</a>
+
+<h2>Income Categories</h2>
+
+<ul>
+  {% for category in income_categories %}
+    <li>
+      <h3>{{ category.name }}</h3>
+      <p>{{ category.description }}</p>
+      <form method="POST" action="{% url 'income_category_delete' category.category_id %}">
+        {% csrf_token %}
+        <button type="submit">Delete</button>
+      </form>
+      <a href="{% url 'income_category_update' category.category_id %}">Edit</a>  <!-- Добавленная строка -->
+    </li>
+  {% empty %}
+    <li>No income categories available.</li>
+  {% endfor %}
+</ul>
+
+<a href="{% url 'income_category_create' %}">Create New Income Category</a>

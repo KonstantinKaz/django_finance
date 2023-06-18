@@ -1,0 +1,7 @@
+<h2>Create Expense Category</h2>
+
+<form method="POST" action="{% url 'expense_category_create' %}">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Create</button>
+</form>

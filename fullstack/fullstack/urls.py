@@ -23,6 +23,7 @@ urlpatterns = [
 
     path('', views.index, name='index'),
     path('accounts/', include('authentication.urls')),
+    path('categories/', include('categories.urls')),
 
 ]
 

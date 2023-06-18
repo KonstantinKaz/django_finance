@@ -1,0 +1,7 @@
+<h2>Update Income Category</h2>
+
+<form method="POST" action="{% url 'income_category_update' category.category_id %}">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Update</button>
+</form>

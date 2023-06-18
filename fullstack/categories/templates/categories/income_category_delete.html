@@ -1,0 +1,8 @@
+<h2>Delete Income Category</h2>
+
+<p>Are you sure you want to delete "{{ category.name }}"?</p>
+
+<form method="POST" action="{% url 'income_category_delete' category.category_id %}">
+  {% csrf_token %}
+  <button type="submit">Delete</button>
+</form>

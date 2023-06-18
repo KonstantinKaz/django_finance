@@ -1,0 +1,7 @@
+<h2>Create Income Category</h2>
+
+<form method="POST" action="{% url 'income_category_create' %}">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Create</button>
+</form>
