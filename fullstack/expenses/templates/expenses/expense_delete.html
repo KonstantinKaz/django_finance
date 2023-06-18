@@ -2,7 +2,7 @@
 
 <p>Are you sure you want to delete the expense with ID: {{ expense.expense_id }}?</p>
 
-<form method="POST">
+<form method="POST" action="{% url 'expense_delete' expense.expense_id %}">
   {% csrf_token %}
   <button type="submit">Delete</button>
 </form>

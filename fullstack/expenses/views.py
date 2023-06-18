@@ -2,21 +2,42 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import Expense
 from .forms import ExpenseForm
 from django.db.models import Sum
-
+from decimal import Decimal
 import datetime
 
+# ...
+
+def calculate_total_expenses(year, month):
+    expenses = Expense.objects.filter(date__year=year, date__month=month)
+    total_expenses = expenses.aggregate(Sum('amount'))['amount__sum'] or Decimal('0')
+    return total_expenses
+
+
 def expense_list(request):
-    expenses = Expense.objects.all()
+    selected_year = request.GET.get('year')
     year = datetime.date.today().year
-    month = 6  # Замените на ваше значение месяца
-    total_expenses = calculate_total_expenses(year, month)
+    month = 6  # Замените на нужный вам месяц
+    if selected_year:
+        expenses = Expense.objects.filter(date__year=selected_year)
+        total_expenses_sum = calculate_total_expenses(selected_year, month)
+    else:
+        expenses = Expense.objects.all()
+        total_expenses_sum = calculate_total_expenses(year, month)
+    expense_years = Expense.objects.values('date__year').distinct().order_by('-date__year')
 
     context = {
         'expenses': expenses,
-        'total_expenses': total_expenses,
+        'total_expenses_sum': total_expenses_sum,
+        'selected_year': selected_year,
+        'expense_years': expense_years,
     }
 
     return render(request, 'expenses/expense_list.html', context)
+
+
+
+
+
 
 
 def expense_create(request):
@@ -50,6 +71,4 @@ def expense_delete(request, expense_id):
     return render(request, 'expenses/expense_delete.html', {'expense': expense})
 
 
-def calculate_total_expenses(year, month):
-    total_expenses = Expense.objects.filter(date__year=year, date__month=month).aggregate(Sum('amount'))
-    return total_expenses
+
