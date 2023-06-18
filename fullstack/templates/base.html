@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Online Store</title>
+</head>
+<body>
+    <header>
+        <a href="#">Logo</a>
+        <nav>
+            <ul>
+                {% if user.is_authenticated %}
+                <li>{{ user.username }}</li>
+                <li><a href="{% url 'logout' %}">Выйти</a></li>
+                {% else %}
+                <li><a href="{% url 'register' %}">Зарегистрироваться</a></li>
+                <li><a href="{% url 'login' %}">Войти</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer>
+        <p>&copy; 2023 My Online Store. All rights reserved.</p>
+    </footer>
+</body>
+</html>
