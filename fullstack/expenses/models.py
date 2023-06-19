@@ -8,7 +8,7 @@ class Expense(models.Model):
     category = models.ForeignKey(ExpenseCategory, on_delete=models.CASCADE)
     date = models.DateField()
     amount = models.DecimalField(max_digits=10, decimal_places=2)
-    description = models.TextField()
+    description = models.TextField(blank=True)
 
     def __str__(self):
         return f"Expense ID: {self.expense_id}, User: {self.user.username}, Category: {self.category.name}"
