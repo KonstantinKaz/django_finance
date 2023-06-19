@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'authentication',
     'categories',
     'expenses',
+    'incomes',
 
 ]
 
