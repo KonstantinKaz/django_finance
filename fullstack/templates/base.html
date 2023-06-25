@@ -1,22 +1,41 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html>
 <head>
-    <title>My Online Store</title>
+    <title>Finance</title>
+    <link rel="stylesheet" href="{% static 'reset.css' %}">
+    <link rel="stylesheet" href="{% static 'base.css' %}">
+    <link rel="stylesheet" href="{% static 'balance/css/balance.css' %}">
+    <link rel="stylesheet" href="{% static 'expenses/css/expenses.css' %}">
+    <link rel="stylesheet" href="{% static 'authentication/css/login.css' %}">
+    <link rel="stylesheet" href="{% static 'authentication/css/register.css' %}">
+
 </head>
 <body>
-    <header>
-        <a href="#">Logo</a>
-        <nav>
-            <ul>
-                {% if user.is_authenticated %}
-                <li>{{ user.username }}</li>
-                <li><a href="{% url 'logout' %}">Выйти</a></li>
-                {% else %}
-                <li><a href="{% url 'register' %}">Зарегистрироваться</a></li>
-                <li><a href="{% url 'login' %}">Войти</a></li>
-                {% endif %}
+    <header class="header header__flex">
+        <a class="header__logo" href="{% url 'index' %}">FP</a>
+        <nav class="header__nav">
+            <ul class="header__ul">
+                <li><a class="header__link" href="{% url 'expense_list' %}">Мои расходы</a></li>
+                <li><a class="header__link" href="{% url 'income_list' %}">Мои доходы</a></li>
+                <li><a class="header__link" href="{% url 'balance' %}">Баланс</a></li>
             </ul>
         </nav>
+        <menu>
+            {% if user.is_authenticated %}
+                <ul class="header__ul">
+                    <li>{{ user.username }}</li>
+                    <li><a class="header__reg-link" href="{% url 'logout' %}">Выйти</a></li>
+                </ul>
+
+            {% else %}
+                <ul class="header__ul">
+                    <li><a class="header__reg-link" class="header__link" href="{% url 'register' %}">Зарегистрироваться</a></li>
+                    <li><a class="header__reg-link" class="header__link" href="{% url 'login' %}">Войти</a></li>
+                </ul>
+            {% endif %}
+        </menu>
     </header>
 
     <main>
@@ -24,8 +43,8 @@
         {% endblock %}
     </main>
 
-    <footer>
-        <p>&copy; 2023 My Online Store. All rights reserved.</p>
+    <footer class="footer">
+        <p>&copy; 2023 Financial Platform. All rights reserved.</p>
     </footer>
 </body>
 </html>

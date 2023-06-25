@@ -1,10 +1,8 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Баланс</title>
-</head>
-<body>
-    <h1>Баланс</h1>
-    <p>Общий баланс: {{ balance.total_balance }}</p>
-</body>
-</html>
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+        <h1>Баланс</h1>
+        <p>Общий баланс: {{ balance.total_balance }}</p>
+{% endblock %}
+

@@ -38,13 +38,17 @@ def income_create(request):
     if request.method == 'POST':
         form = IncomeForm(request.POST)
         if form.is_valid():
-            income = form.save(commit=False)
-            income.user = request.user
-            income.save()
+            expense = form.save(commit=False)
+            expense.user = request.user
+            expense.save()
+            form.save_m2m()  # Сохранение связанных ManyToMany-полей
             return redirect('income_list')
     else:
         form = IncomeForm()
-    return render(request, 'incomes/income_create.html', {'form': form})
+
+    context = {'form': form}
+    return render(request, 'incomes/income_create.html', context)
+
 
 def income_edit(request, income_id):
     income = get_object_or_404(Income, income_id=income_id)

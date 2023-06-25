@@ -37,11 +37,6 @@ def expense_list(request):
     return render(request, 'expenses/expense_list.html', context)
 
 
-
-
-
-
-
 def expense_create(request):
     if request.method == 'POST':
         form = ExpenseForm(request.POST)
@@ -49,10 +44,13 @@ def expense_create(request):
             expense = form.save(commit=False)
             expense.user = request.user
             expense.save()
+            form.save_m2m()  # Сохранение связанных ManyToMany-полей
             return redirect('expense_list')
     else:
         form = ExpenseForm()
-    return render(request, 'expenses/expense_create.html', {'form': form})
+
+    context = {'form': form}
+    return render(request, 'expenses/expense_create.html', context)
 
 
 def expense_edit(request, expense_id):

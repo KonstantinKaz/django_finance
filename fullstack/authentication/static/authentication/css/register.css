@@ -1,0 +1,18 @@
+.login {
+    max-width: 300px;
+    margin: 0 auto;
+    padding: 50px 0;
+}
+
+.form > * {
+    display: block;
+    margin: 5px 0;
+}
+
+
+.form__btn {
+    background-color: orange;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+}

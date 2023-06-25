@@ -1,25 +1,37 @@
-<h2>Фильтровать расходы по году</h2>
-<form method="GET">
-  <select name="year">
-    <option value="">Все</option>
-    {% for expense_year in expense_years %}
-      <option value="{{ expense_year.date__year }}" {% if selected_year == expense_year.date__year %}selected{% endif %}>{{ expense_year.date__year }}</option>
-    {% endfor %}
-  </select>
-  <button type="submit">Фильтровать</button>
-</form>
+{% extends 'base.html' %}
+{% load static %}
 
-<h2>Список расходов</h2>
-{% for expense in expenses %}
-  <p>{{ expense.expense_name }} <br>{{ expense.category.name }} <br> {{ expense.date }} <br> {{ expense.amount }} <br> {{ expense.description }}</p>
-  <a href="{% url 'expense_edit' expense.expense_id %}">Редактировать</a>
-  <form method="POST" action="{% url 'expense_delete' expense.expense_id %}">
-    {% csrf_token %}
-    <button type="submit">Удалить</button>
+{% block content %}
+
+<div class="expenses">
+  <h2>Фильтрация расходов</h2>
+  <form method="GET">
+    <select name="year">
+      <option value="">Все</option>
+      {% for expense_year in expense_years %}
+        <option value="{{ expense_year.date__year }}" {% if selected_year == expense_year.date__year %}selected{% endif %}>{{ expense_year.date__year }}</option>
+      {% endfor %}
+    </select>
+    <button type="submit">Фильтровать</button>
   </form>
-{% empty %}
-  <p>Нет доступных расходов.</p>
-{% endfor %}
 
-<a href="{% url 'expense_create' %}">Создать новый расход</a>
-<p>Общие расходы: {{ total_expenses_sum }}</p>
+  <div class="expenses__menu">
+    <h2>Список расходов</h2>
+    <a class="expenses__link" href="{% url 'expense_create' %}">Создать новый расход</a>
+    {% for expense in expenses %}
+      <p>{{ expense.expense_name }} <br>{{ expense.category.name }} <br> {{ expense.date }} <br> {{ expense.amount }} <br> {{ expense.description }}</p>
+      <a href="{% url 'expense_edit' expense.expense_id %}">Редактировать</a>
+      <form method="POST" action="{% url 'expense_delete' expense.expense_id %}">
+        {% csrf_token %}
+        <button type="submit">Удалить</button>
+      </form>
+    {% empty %}
+      <p>Нет доступных расходов.</p>
+    {% endfor %}
+  
+
+    <p>Общие расходы: {{ total_expenses_sum }}</p>
+  </div>
+
+</div>
+{% endblock %}
