@@ -21,4 +21,3 @@ class ExpenseAdmin(admin.ModelAdmin):
     @admin.display(description='Amount')
     def amount_display(self, obj):
         return f'${obj.amount}'
-

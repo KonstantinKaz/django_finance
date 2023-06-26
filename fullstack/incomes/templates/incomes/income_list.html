@@ -1,3 +1,8 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
 <h2>Фильтровать доходы по году</h2>
 <form method="GET">
   <select name="year">
@@ -25,4 +30,4 @@
 
 <a href="{% url 'income_create' %}">Создать новый доход</a>
 <p>Общий доход: {{ total_income_sum }}</p>
-
+{% endblock %}
