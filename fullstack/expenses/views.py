@@ -4,28 +4,42 @@ from .forms import ExpenseForm
 from django.db.models import Sum
 from decimal import Decimal
 import datetime
-from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 
 
 # ...
 
-def calculate_total_expenses(year, month):
-    expenses = Expense.objects.filter(date__year=year, date__month=month)
+
+
+def calculate_total_expenses(year, month, user):
+    expenses = Expense.objects.filter(date__year=year, date__month=month, user=user)
     total_expenses = expenses.aggregate(Sum('amount'))['amount__sum'] or Decimal('0')
     return total_expenses
 
 
+
+
+
+
+
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+
+@login_required
 def expense_list(request):
     selected_year = request.GET.get('year')
     year = datetime.date.today().year
     month = 6  # Замените на нужный вам месяц
+    user = request.user
+
     if selected_year:
-        expenses = Expense.objects.filter(date__year=selected_year)
-        total_expenses_sum = calculate_total_expenses(selected_year, month)
+        expenses = Expense.objects.filter(date__year=selected_year, user=user)
+        total_expenses_sum = calculate_total_expenses(selected_year, month, user)
     else:
-        expenses = Expense.objects.all()
-        total_expenses_sum = calculate_total_expenses(year, month)
-    expense_years = Expense.objects.values('date__year').distinct().order_by('-date__year')
+        expenses = Expense.objects.filter(user=user)
+        total_expenses_sum = calculate_total_expenses(year, month, user)
+
+    expense_years = Expense.objects.filter(user=user).values('date__year').distinct().order_by('-date__year')
 
     context = {
         'expenses': expenses,
@@ -35,6 +49,10 @@ def expense_list(request):
     }
 
     return render(request, 'expenses/expense_list.html', context)
+
+
+
+
 
 
 def expense_create(request):

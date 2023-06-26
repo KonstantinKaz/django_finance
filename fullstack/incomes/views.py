@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Income
 from .forms import IncomeForm
@@ -8,22 +9,27 @@ from django.contrib.auth.models import User
 
 # ...
 
-def calculate_total_income(year, month):
-    income = Income.objects.filter(date__year=year, date__month=month)
-    total_income = income.aggregate(Sum('amount'))['amount__sum'] or Decimal('0')
+def calculate_total_income(year, month, user):
+    incomes = Income.objects.filter(date__year=year, date__month=month, user=user)
+    total_income = incomes.aggregate(Sum('amount'))['amount__sum'] or Decimal('0')
     return total_income
 
+
+@login_required
 def income_list(request):
     selected_year = request.GET.get('year')
     year = datetime.date.today().year
-    month = 6  # Замените на нужный вам месяц
+    month = 6
+    user = request.user
+
     if selected_year:
-        incomes = Income.objects.filter(date__year=selected_year)
-        total_income_sum = calculate_total_income(selected_year, month)
+        incomes = Income.objects.filter(date__year=selected_year, user=user)
+        total_income_sum = calculate_total_income(selected_year, month, user)
     else:
-        incomes = Income.objects.all()
-        total_income_sum = calculate_total_income(year, month)
-    income_years = Income.objects.values('date__year').distinct().order_by('-date__year')
+        incomes = Income.objects.filter(user=user)
+        total_income_sum = calculate_total_income(year, month, user)
+
+    income_years = Income.objects.filter(user=user).values('date__year').distinct().order_by('-date__year')
 
     context = {
         'incomes': incomes,
@@ -33,6 +39,7 @@ def income_list(request):
     }
 
     return render(request, 'incomes/income_list.html', context)
+
 
 def income_create(request):
     if request.method == 'POST':

@@ -16,17 +16,19 @@
 
 <h2>Список доходов</h2>
 {% for income in incomes %}
-  <p>{{ income.income_name }} <br>{{ income.category.name }} <br> {{ income.date }} <br> {{ income.amount }} <br> {{ income.description }}</p>
-  <a href="{% url 'income_edit' income.income_id %}">Редактировать</a>
-  <form method="POST" action="{% url 'income_delete' income.income_id %}">
-    {% csrf_token %}
-    <input type="hidden" name="income_id" value="{{ income.income_id }}">
-    <button type="submit">Удалить</button>
-  </form>
+  {% if income.user == request.user %}
+    <p>{{ income.income_name }} <br>{{ income.category.name }} <br> {{ income.date }} <br> {{ income.amount }} <br> {{ income.description }}</p>
+    <a href="{% url 'income_edit' income.income_id %}">Редактировать</a>
+    <form method="POST" action="{% url 'income_delete' income.income_id %}">
+      {% csrf_token %}
+      <input type="hidden" name="income_id" value="{{ income.income_id }}">
+      <button type="submit">Удалить</button>
+    </form>
+  {% endif %}
+  {% empty %}
+    <p>Нет доступных доходов.</p>
+  {% endfor %}
 
-{% empty %}
-  <p>Нет доступных доходов.</p>
-{% endfor %}
 
 <a href="{% url 'income_create' %}">Создать новый доход</a>
 <p>Общий доход: {{ total_income_sum }}</p>

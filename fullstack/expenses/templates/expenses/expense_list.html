@@ -14,24 +14,26 @@
     </select>
     <button type="submit">Фильтровать</button>
   </form>
+      <a href="{% url 'expense_create' %}">Создать новый расход</a> <br>
 
-  <div class="expenses__menu">
-    <h2>Список расходов</h2>
-    <a class="expenses__link" href="{% url 'expense_create' %}">Создать новый расход</a> <br>
-    {% for expense in expenses %}
-      <p>{{ expense.expense_name }} <br>{{ expense.category.name }} <br> {{ expense.date }} <br> {{ expense.amount }} <br> {{ expense.description }}</p>
-      <a href="{% url 'expense_edit' expense.expense_id %}">Редактировать</a>
-      <form method="POST" action="{% url 'expense_delete' expense.expense_id %}">
-        {% csrf_token %}
-        <button type="submit">Удалить</button>
-      </form>
-    {% empty %}
-      <p>Нет доступных расходов.</p>
-    {% endfor %}
-  
+  {% for expense in expenses %}
+  {% if expense.user == request.user %}
+    <p>{{ expense.expense_name }} <br>{{ expense.category.name }} <br> {{ expense.date }} <br> {{ expense.amount }} <br> {{ expense.description }}</p>
+    <a href="{% url 'expense_edit' expense.expense_id %}">Редактировать</a>
+    <form method="POST" action="{% url 'expense_delete' expense.expense_id %}">
+      {% csrf_token %}
+      <button type="submit">Удалить</button>
+    </form>
+  {% endif %}
+  {% empty %}
+    <p>Нет доступных расходов.</p>
+  {% endfor %}
+
+
 
     <p>Общие расходы: {{ total_expenses_sum }}</p>
   </div>
 
 </div>
 {% endblock %}
+

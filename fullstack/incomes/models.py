@@ -5,6 +5,7 @@ from django.utils import timezone
 import pytz
 
 
+
 class Income(models.Model):
     income_id = models.AutoField(primary_key=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -22,3 +23,7 @@ class Income(models.Model):
             tz = pytz.timezone('Europe/Moscow')
             self.date = tz.localize(self.date)
         super().save(*args, **kwargs)
+
+
+class IncomeItem:
+    pass
