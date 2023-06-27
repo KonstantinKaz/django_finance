@@ -1,6 +1,6 @@
 from django.contrib import admin
-from django.forms import SelectMultiple
 from .models import Income
+
 
 @admin.register(Income)
 class IncomeAdmin(admin.ModelAdmin):
