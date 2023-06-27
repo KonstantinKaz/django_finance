@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="{% static 'expenses/css/expenses.css' %}">
     <link rel="stylesheet" href="{% static 'authentication/css/login.css' %}">
     <link rel="stylesheet" href="{% static 'authentication/css/register.css' %}">
+    <link rel="stylesheet" href="{% static 'goals/css/goals.css' %}">
 
 </head>
 <body>
@@ -20,6 +21,7 @@
                 <li><a class="header__link" href="{% url 'expense_list' %}">Мои расходы</a></li>
                 <li><a class="header__link" href="{% url 'income_list' %}">Мои доходы</a></li>
                 <li><a class="header__link" href="{% url 'balance' %}">Баланс</a></li>
+                <li><a class="header__link" href="{% url 'goal_list' %}">Цели</a></li>
             </ul>
         </nav>
         <menu>

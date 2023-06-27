@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<h1>Цели</h1>
+<ul class="goals">
+  {% for goal in goals %}
+    <li class="goal">
+      <h2>{{ goal.name }}</h2>
+      <p>Описание: {{ goal.description }}</p>
+      <p>Сумма цели: {{ goal.amount }}</p>
+      <p>Осталось накопить: {{ goal.get_remaining_amount }}</p>
+      <a href="{% url 'goal_update' goal_id=goal.id %}">Редактировать</a> <br>
+      <a href="{% url 'goal_delete' goal_id=goal.id %}">Удалить</a> <br>
+    </li>
+  {% empty %}
+    <li>No goals found.</li>
+  {% endfor %}
+</ul>
+<a href="{% url 'goal_create' %}">Создать цель</a>
+{% endblock %}

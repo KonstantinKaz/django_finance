@@ -1,0 +1,6 @@
+<h1>Delete Goal</h1>
+<p>Are you sure you want to delete the goal "{{ goal.name }}"?</p>
+<form action="{% url 'goal_delete' goal_id=goal.id %}" method="POST">
+  {% csrf_token %}
+  <input type="submit" value="Delete">
+</form>

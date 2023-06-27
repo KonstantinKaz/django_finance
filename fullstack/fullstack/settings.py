@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'expenses',
     'incomes',
     'balance',
+    'goals',
 
 ]
 
