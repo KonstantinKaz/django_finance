@@ -18,21 +18,28 @@
 
   {% for expense in expenses %}
   {% if expense.user == request.user %}
-    <p>{{ expense.expense_name }} <br>{{ expense.category.name }} <br> {{ expense.date }} <br> {{ expense.amount }} <br> {{ expense.description }}</p>
-    <a href="{% url 'expense_edit' expense.expense_id %}">Редактировать</a>
-    <form method="POST" action="{% url 'expense_delete' expense.expense_id %}">
-      {% csrf_token %}
-      <button type="submit">Удалить</button>
-    </form>
+    <div class="card">
+      <p>{{ expense.expense_name }}</p>
+      <p>{{ expense.category.name }}</p>
+      <p>{{ expense.date }}</p>
+      <p>{{ expense.amount }}</p>
+      <p>{{ expense.description }}</p>
+      <a href="{% url 'expense_edit' expense.expense_id %}">Редактировать</a>
+      <form method="POST" action="{% url 'expense_delete' expense.expense_id %}">
+        {% csrf_token %}
+        <button type="submit">Удалить</button>
+      </form>
+    </div>
   {% endif %}
   {% empty %}
     <p>Нет доступных расходов.</p>
   {% endfor %}
-  <a href="{% url 'expense_category_create' %}">Create New Income Category</a>
 
+  <br>
+  <a class="create-category" href="{% url 'expense_category_create' %}">Создать Новую Категорию</a>
+  <br>
 
-
-    <p>Общие расходы: {{ total_expenses_sum }}</p>
+    <p class="ert">Общие расходы: {{ total_expenses_sum }}</p>
   </div>
 
 </div>

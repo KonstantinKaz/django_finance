@@ -46,3 +46,5 @@ def goal_delete(request, goal_id):
     goal = get_object_or_404(Goal, id=goal_id, user=request.user)
     goal.delete()
     return redirect('goal_list')
+
+

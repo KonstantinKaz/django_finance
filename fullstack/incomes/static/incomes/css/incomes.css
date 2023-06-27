@@ -1,13 +1,18 @@
+* {
+    margin-bottom: 20px;
+}
+
 .expenses {
     max-width: 1000px;
     margin: 0 auto;
 }
 .expenses__link {
-    margin: 30px 0;
+    /* margin: 30px 0; */
     padding: 10px 20px;
     border-radius: 20px;
     background-color: red;
     margin-left: 100px;
+    margin-bottom: 100px;
 }
 
 .card {
@@ -30,4 +35,8 @@
 }
 .ert {
     margin-top: 20px;
+}
+
+a {
+    margin-bottom: 10px;
 }

@@ -9,7 +9,12 @@
       <h2>{{ goal.name }}</h2>
       <p>Описание: {{ goal.description }}</p>
       <p>Сумма цели: {{ goal.amount }}</p>
-      <p>Осталось накопить: {{ goal.get_remaining_amount }}</p>
+      {% if goal.get_remaining_amount < 0 %}
+        <p>Вы успешно накопили!</p>
+        <p>Останется после покупки: {{ goal.get_reremaining_amount }} </p>
+      {% else %}
+        <p>Осталось накопить: {{ goal.get_remaining_amount }}</p>
+      {% endif %}
       <a href="{% url 'goal_update' goal_id=goal.id %}">Редактировать</a> <br>
       <a href="{% url 'goal_delete' goal_id=goal.id %}">Удалить</a> <br>
     </li>

@@ -2,7 +2,10 @@
 {% load static %}
 
 {% block content %}
-        <h1>Баланс</h1>
-        <p>Общий баланс: {{ balance.total_balance }}</p>
+        <div class="expenses card">
+                <h1>Баланс</h1>
+                <p class="erty">Общий баланс: {{ balance.total_balance }}</p>
+        </div>
+
 {% endblock %}
 

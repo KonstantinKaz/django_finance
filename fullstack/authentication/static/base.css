@@ -3,6 +3,19 @@ a {
     text-decoration: none;
 }
 
+a:hover {
+    color: orange;
+}
+
+bottom {
+    color: #000;
+    text-decoration: none;
+}
+
+bottom:hover {
+    color: orange;
+}
+
 .header {
     padding: 0 20px;
     margin-top: 10px;

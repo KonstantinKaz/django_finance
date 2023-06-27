@@ -16,3 +16,7 @@ class Goal(models.Model):
         balance = Balance.objects.get(user=self.user)
         remaining_amount = self.amount - balance.total_balance
         return remaining_amount
+    def get_reremaining_amount(self):
+        balance = Balance.objects.get(user=self.user)
+        reremaining_amount = balance.total_balance - self.amount
+        return reremaining_amount

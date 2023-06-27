@@ -3,34 +3,40 @@
 
 {% block content %}
 
-<h2>Фильтровать доходы по году</h2>
-<form method="GET">
-  <select name="year">
-    <option value="">Все</option>
-    {% for income_year in income_years %}
-      <option value="{{ income_year.date__year }}" {% if selected_year == income_year.date__year %}selected{% endif %}>{{ income_year.date__year }}</option>
-    {% endfor %}
-  </select>
-  <button type="submit">Фильтровать</button>
-</form>
-
-<h2>Список доходов</h2>
-{% for income in incomes %}
-  {% if income.user == request.user %}
-    <p>{{ income.income_name }} <br>{{ income.category.name }} <br> {{ income.date }} <br> {{ income.amount }} <br> {{ income.description }}</p>
-    <a href="{% url 'income_edit' income.income_id %}">Редактировать</a>
-    <form method="POST" action="{% url 'income_delete' income.income_id %}">
-      {% csrf_token %}
-      <input type="hidden" name="income_id" value="{{ income.income_id }}">
-      <button type="submit">Удалить</button>
+  <div class="expenses">
+    <h2>Фильтровать доходы по году</h2>
+    <form method="GET">
+      <select name="year">
+        <option value="">Все</option>
+        {% for income_year in income_years %}
+          <option value="{{ income_year.date__year }}" {% if selected_year == income_year.date__year %}selected{% endif %}>{{ income_year.date__year }}</option>
+        {% endfor %}
+      </select>
+      <button type="submit">Фильтровать</button>
     </form>
-  {% endif %}
-  {% empty %}
-    <p>Нет доступных доходов.</p>
-  {% endfor %}
+
+    <h2>Список доходов</h2>
+      {% for income in incomes %}
+      {% if income.user == request.user %}
+      <div class="card">
+        <p>{{ income.income_name }} <br>{{ income.category.name }} <br> {{ income.date }} <br> {{ income.amount }} <br> {{ income.description }}</p>
+        <a href="{% url 'income_edit' income.income_id %}">Редактировать</a>
+        <form method="POST" action="{% url 'income_delete' income.income_id %}">
+          {% csrf_token %}
+          <input type="hidden" name="income_id" value="{{ income.income_id }}">
+          <button type="submit">Удалить</button>
+        </form>
+      </div>
+      {% endif %}
+      {% empty %}
+        <p>Нет доступных доходов.</p>
+      {% endfor %}
 
 
-<a href="{% url 'income_create' %}">Создать новый доход</a>
-<a href="{% url 'income_category_create' %}">Create New Income Category</a>
-<p>Общий доход: {{ total_income_sum }}</p>
+
+    <a href="{% url 'income_create' %}">Создать новый доход</a> <br>
+    <a class="create-category" href="{% url 'income_category_create' %}">Создать новую категорию</a>
+    <p>Общий доход: {{ total_income_sum }}</p>
+  </div>
+
 {% endblock %}
