@@ -1,5 +1,4 @@
 from django.contrib import admin
-from django.forms import SelectMultiple
 from .models import Expense
 
 @admin.register(Expense)
@@ -18,6 +17,3 @@ class ExpenseAdmin(admin.ModelAdmin):
 
     get_category_names.short_description = 'Categories'
 
-    @admin.display(description='Amount')
-    def amount_display(self, obj):
-        return f'${obj.amount}'

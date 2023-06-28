@@ -5,9 +5,7 @@ from .forms import IncomeForm
 from django.db.models import Sum
 from decimal import Decimal
 import datetime
-from django.contrib.auth.models import User
 
-# ...
 
 def calculate_total_income(year, month, user):
     incomes = Income.objects.filter(date__year=year, date__month=month, user=user)
@@ -19,7 +17,7 @@ def calculate_total_income(year, month, user):
 def income_list(request):
     selected_year = request.GET.get('year')
     year = datetime.date.today().year
-    month = 6
+    month = datetime.date.today().month
     user = request.user
 
     if selected_year:

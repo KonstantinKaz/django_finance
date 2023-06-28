@@ -25,5 +25,3 @@ class Income(models.Model):
         super().save(*args, **kwargs)
 
 
-class IncomeItem:
-    pass
